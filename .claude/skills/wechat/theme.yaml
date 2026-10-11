@@ -1,60 +1,120 @@
 # 微信公众号排版样式 —— 所有数值的唯一来源
-# 改这里,全文一起变。不要在 HTML 里写死任何数值。
+# 数值来自对参考文章 2x 截图的实测(内容宽 677px,像素值 /2 = CSS px)
+# 改这里,全文一起变。不要在 HTML 或 SKILL.md 里写死任何数值。
 
 body:
-  font_size:      16px
-  color:          "#333333"
-  line_height:    1.8
-  para_spacing:   18px
-  side_padding:   0px        # 待实测:微信正文区自带 padding
+  font_size:      14px        # 实测汉字字距 29px@2x
+  letter_spacing: 0.5px
+  color:          "#384150"   # 实测
+  line_height:    1.9         # 实测基线距 27px
+  para_spacing:   14px
+  side_padding:   0px         # 微信正文区自带 padding
 
-h1:
-  font_size:      22px
-  font_weight:    700
-  color:          "#1F2937"
-  margin_top:     40px       # 上留白明显大于下
-  margin_bottom:  16px
-  rule_width:     3px        # 左侧色条
-  rule_color:     "#3769B2"
+# 章节标题块:满宽粗线 → PART 编号 → 主标题 → 英文副标 → 短下划线,全部居中
+section:
+  rule_color:     "#1D4A71"
+  rule_height:    3px
+  rule_margin:    40px        # 粗线与 PART 之间
+
+  part_size:      12px
+  part_color:     "#1D4A71"
+  part_spacing:   4px         # letter-spacing
+  part_margin:    18px
+
+  title_size:     22px
+  title_weight:   700
+  title_color:    "#111826"   # 实测
+  title_spacing:  1px
+  title_margin:   14px
+
+  tag_size:       11px
+  tag_color:      "#8A939E"
+  tag_spacing:    3px
+  tag_margin:     10px
+
+  under_width:    64px        # 短下划线
+  under_height:   3px
+  under_color:    "#1D4A71"
+  under_margin:   28px        # 下划线到正文
 
 h2:
-  font_size:      18px
-  font_weight:    600
-  color:          "#1F2937"
+  font_size:      17px
+  font_weight:    700
+  color:          "#111826"
   margin_top:     28px
   margin_bottom:  12px
 
 accent:
-  color:          "#3769B2"  # 关键概念的强调色
+  color:          "#1D4A71"   # 关键概念 / 列表引导词 / 徽章
+  red:            "#C0392B"   # 卡片里的强调红
 
-insight:                     # 洞察 / 引用框
-  background:     "#F5F7FA"
-  border_left:    3px
-  border_color:   "#3769B2"
-  padding:        16px
-  radius:         4px
+insight:                      # > [!insight] 核心洞察
+  background:     "#B3C0CB"   # 实测
+  border_left:    4px
+  border_color:   "#1D4A71"
+  text_color:     "#1F2937"
+  padding:        16px 18px
+  radius:         3px
   margin:         24px
 
-caption:                     # 图片说明
+quote:                        # > [!quote] 官方原文,斜体
+  background:     "#B3C0CB"
+  border_left:    4px
+  border_color:   "#1D4A71"
+  text_color:     "#1F2937"
+  italic:         true
+  padding:        16px 18px
+  radius:         3px
+  margin:         24px
+
+list:
+  badge_bg:       "#1D4A71"   # 实心圆徽章
+  badge_color:    "#FFFFFF"
+  badge_size:     18px
+  item_spacing:   12px
+  indent:         26px
+
+caption:
   font_size:      13px
-  color:          "#999999"
+  color:          "#8A939E"
   align:          center
-  margin_top:     8px
+  margin_top:     10px
 
 divider:
   color:          "#E5E7EB"
   height:         1px
   margin:         32px
 
-code:                        # 微信不支持语法高亮,单色处理
+code:
   background:     "#F6F8FA"
   color:          "#24292F"
-  font_size:      14px
+  font_size:      13px
   font_family:    "Menlo, Consolas, monospace"
   padding:        12px
   radius:         4px
 
 table:
-  border_color:   "#E5E7EB"
-  header_bg:      "#F5F7FA"
-  font_size:      14px
+  header_bg:      "#1D4A71"   # 实测:深蓝底白字
+  header_color:   "#FFFFFF"
+  stripe_bg:      "#B8C2CA"   # 实测:斑马纹
+  first_col_color: "#1D4A71"  # 首列蓝色粗体
+  border_color:   "#D5DBE1"
+  font_size:      13px
+
+fig:                          # 章节信息图卡片(参考文章 FIG 01/07 ~ 07/07)
+  background:     "#FFFFFF"
+  border_color:   "#D5DBE1"
+  eyebrow_size:   11px
+  eyebrow_color:  "#8A939E"
+  eyebrow_spacing: 2px
+  title_size:     28px
+  title_color:    "#111826"
+  title_family:   "Georgia, 'Times New Roman', serif"
+  sub_size:       12px
+  sub_color:      "#5B6572"
+  stat_size:      34px
+  stat_color:     "#C0392B"
+  source_size:    10px
+  source_color:   "#A0A8B2"
+  padding:        22px
+  margin:         28px

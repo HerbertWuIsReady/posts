@@ -1,59 +1,68 @@
 ---
-title: 推理成本下降如何重塑 AI 应用的商业模式
-created: 2026-10-11
+title: Snowflake 怎么把本体论塞进数据仓库
 wechat:
   status: draft
-  digest: 单位推理成本两年降了两个数量级,真正被改写的不是毛利率,而是产品形态。
+  digest: 四个产品、两个发布日、一条主线。
 ---
 
-过去两年,大模型的单位推理成本下降了约两个数量级。多数讨论把它当成一个毛利率问题 —— 成本降了,利润就上来了。这个判断漏掉了更重要的一半。
+# 公司速览：Snowflake 是一家什么公司 {OVERVIEW}
 
-# 一、成本曲线改变的不是利润,是产品边界
+Snowflake 的传统底子是数据仓库 + 数据湖，2024 年开始加 AI。
 
-当单次调用从几分钱降到几十微美元,**原本因为单位经济性不成立而被放弃的产品形态重新变得可行**。这才是这条曲线的真正影响。
+- 截至 2026 年 1 月 31 日（Q4 FY26 财报）：全球客户 ==13,328 家==（同比 +21%），其中 Forbes Global 2000 占 ==790 家==（同比 +5%）。
+- 产品线：Cortex、Horizon Catalog、Semantic Studio、Knowledge Graph。
 
-典型的例子是 ==后台常驻的智能体==。它需要持续轮询、反复重试、保留长上下文,在旧的成本结构下每个用户每月要烧掉几十美元,没有任何订阅价能覆盖。
+:::fig 01/07
+eyebrow:    COVER · 厂商产品解剖系列 第 4 篇
+title:      Snowflake 4 大产品
+title:      从企业级湖仓
+title-red:  到 AI 智能体
+sub:        Horizon Catalog GA · Semantic Studio preview · Knowledge Graph · Cortex Sense preview
+line:       4 个产品 · 2 个发布日 · 1 个主线：把 ontology 塞进 warehouse
+stat:       4/2/1
+stat-label: 产品 / 发布日 / 主线
+source:     Snowflake 官方公告 + 官方 Docs + 第三方权威报道
+layers:     三层事实分层 62% / 25% / 13% · 25 数据来源 · 2026-09-19
+watermark:  公众号 · AI风起兮
+caption:    Snowflake 4 大产品 / 从企业级湖仓 / 到 AI 智能体
+:::
+
+# 一、Snowflake 的本体论起源，从 Cortex 到 Horizon {SNOWFLAKE}
+
+Cortex 这个 AI 产品家族在 2024 年 6 月的 Snowflake Summit 上第一次成形。但光是「在 warehouse 里跑模型」并不够，真正的痛点是，**AI 智能体需要知道仓库里到底有什么、字段代表什么、跨表关系是什么。**
+
+## 1.1 Horizon Catalog 的官方定位
+
+Horizon Catalog 是 ==2025-11-04== 在 BUILD 大会上 GA 的。它的官方定位，来自 Snowflake 的产品页，
+
+> [!quote]
+> Horizon Catalog is the universal AI catalog for Snowflake. It provides a single place for all of your data and AI assets, with built-in governance and context.
+
+它由三个组件构成，根据[官方文档](https://docs.snowflake.com/)，
+
+1. ==Collect==: 把结构化 + 非结构化资产统一收集起来，带 catalog 层的上下文。
+2. ==Maintain==: 数据质量 + 自动化的运维监控。
+3. ==Extend==: 跨引擎读写能力，因为底层是 Apache Polaris（`Iceberg REST Catalog`）。
 
 > [!insight]
-> 成本下降不是让旧产品更赚钱,而是让一类新产品从负毛利穿越到正毛利。
->
-> 这解释了为什么大量 AI 应用在 2025 年之后才密集出现 —— 它们的技术在更早就有了,只是算不过账。
+> 把 ontology 塞进 warehouse，本质是让语义层和存储层共用一套治理边界 —— 这是 Snowflake 和 Palantir 路线最大的分野。
 
-## 1.1 三类受益最明显的形态
+## 1.2 与 Palantir 的横向对比
 
-- **长上下文检索** —— 单次请求的输入 token 从几千涨到几十万仍然可控
-- **多轮自动化** —— 一个任务跑十几轮工具调用,成本从不可接受变成几美分
-  - 其中最典型的是代码类任务
-  - 其次是数据清洗和报表生成
-- **被动监控** —— 没有用户交互也在后台跑,靠的就是极低的单次成本
+两家没有对称的公开文档，以下对标基于两边的公开文档互证，**非任何一方的官方对标声明**。
 
-## 1.2 一组对照数据
+| 维度 | Snowflake | Palantir |
+|---|---|---|
+| ==Object / 实体定义== | Semantic View + KG_NODE，带维度、度量、关系 | Ontology SDK Object Type，声明业务对象 |
+| ==Link / 关系定义== | KG_EDGE 显式声明，GraphRAG 提供遍历 | Ontology SDK Link Type，带 cardinality |
+| ==治理边界== | RBAC + FGAC + ABAC，Apache Polaris 跨引擎 | Foundry 数据访问角色 + 资源级别 RBAC |
 
-| 形态 | 2024 单任务成本 | 2026 单任务成本 | 可行性变化 |
-|---|---|---|---|
-| 单轮问答 | $0.002 | $0.0002 | 本来就可行 |
-| 多轮智能体 | $0.80 | $0.04 | 不可行 → 可行 |
-| 常驻监控 | $45 / 月 | $1.2 / 月 | 不可行 → 可行 |
+3 个维度对比下来，最显著的差异点是 Snowflake 把治理放在存储层，Palantir 放在应用层。
 
----
-
-# 二、被重新定价的是什么
-
-真正被重新定价的不是推理,是 ==人的注意力==。当机器可以无成本地反复尝试,**稀缺资源就从算力转移到了"谁来验收结果"**。
-
-这里有个容易被忽略的推论:验收成本不随推理成本下降。
-
-```python
-# 成本结构的变化:推理项塌缩,验收项不动
-total = n_attempts * cost_per_inference + human_review_minutes * hourly_rate / 60
-#       ↑ 两年降了 100 倍                  ↑ 没变
+```sql
+-- KG_EDGE 的遍历靠 recursive CTE
+WITH RECURSIVE walk AS (SELECT src, dst FROM KG_EDGE WHERE src = 'account:1')
+SELECT * FROM walk;
 ```
 
-所以产品设计的重心会从"少调用几次模型"转向"让人少看几眼结果"。相关讨论可以参考 [Anthropic 的工程博客](https://www.anthropic.com/engineering) 和 [定价页](https://platform.claude.com/docs)。
-
-![图 1:单位推理成本与可行产品形态的关系(2024–2026)](assets/fig1.png)
-
-# 三、结论
-
-> [!insight]
-> 成本下降的终点不是更便宜的旧产品,而是一类以前算不过账的新产品 —— 以及一个新的瓶颈:人的验收带宽。
+![图 2：Horizon Catalog 的三层结构](assets/fig2.png)
