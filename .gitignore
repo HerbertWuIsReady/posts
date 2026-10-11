@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# 构建产物:成品 HTML 可以留档,临时文件不要
+content/**/out/*.tmp.html

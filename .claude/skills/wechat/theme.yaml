@@ -1,0 +1,60 @@
+# 微信公众号排版样式 —— 所有数值的唯一来源
+# 改这里,全文一起变。不要在 HTML 里写死任何数值。
+
+body:
+  font_size:      16px
+  color:          "#333333"
+  line_height:    1.8
+  para_spacing:   18px
+  side_padding:   0px        # 待实测:微信正文区自带 padding
+
+h1:
+  font_size:      22px
+  font_weight:    700
+  color:          "#1F2937"
+  margin_top:     40px       # 上留白明显大于下
+  margin_bottom:  16px
+  rule_width:     3px        # 左侧色条
+  rule_color:     "#3769B2"
+
+h2:
+  font_size:      18px
+  font_weight:    600
+  color:          "#1F2937"
+  margin_top:     28px
+  margin_bottom:  12px
+
+accent:
+  color:          "#3769B2"  # 关键概念的强调色
+
+insight:                     # 洞察 / 引用框
+  background:     "#F5F7FA"
+  border_left:    3px
+  border_color:   "#3769B2"
+  padding:        16px
+  radius:         4px
+  margin:         24px
+
+caption:                     # 图片说明
+  font_size:      13px
+  color:          "#999999"
+  align:          center
+  margin_top:     8px
+
+divider:
+  color:          "#E5E7EB"
+  height:         1px
+  margin:         32px
+
+code:                        # 微信不支持语法高亮,单色处理
+  background:     "#F6F8FA"
+  color:          "#24292F"
+  font_size:      14px
+  font_family:    "Menlo, Consolas, monospace"
+  padding:        12px
+  radius:         4px
+
+table:
+  border_color:   "#E5E7EB"
+  header_bg:      "#F5F7FA"
+  font_size:      14px
