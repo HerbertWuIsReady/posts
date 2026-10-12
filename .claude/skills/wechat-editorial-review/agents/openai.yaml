@@ -1,0 +1,4 @@
+interface:
+  display_name: "微信文章审稿"
+  short_description: "系统审查公众号长文的事实、论证、文风、图表与发布质量"
+  default_prompt: "Use $wechat-editorial-review to review this WeChat article before publication."
